@@ -185,7 +185,8 @@ let getenv k =
 let restrict_env allowed =
   let setenv env k =
     Option.may_default env (fun v -> v::env) (getenv k) in
-  Array.of_list (List.fold_left setenv ["PATH=/bin:/usr/bin"] allowed)
+  Array.of_list (List.fold_left setenv
+    ["PATH=/bin:/usr/bin"; "OCAMLRUNPARAM=b"] allowed)
 
 let rec exec_process cmd ipc_handler slave_env check_death_rate =
   lwt () = check_death_rate () in
